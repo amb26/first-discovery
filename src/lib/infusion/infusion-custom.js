@@ -18792,6 +18792,9 @@ var fluid_2_0 = fluid_2_0 || {};
         for (var i = 0; i < listeners.length; ++ i) {
             var spec = listeners[i];
             var invalidPaths = fluid.matchChanges(changeMap, spec.segs, newHolder);
+            if (transaction) {
+                console.log("Got invalidPaths " + JSON.stringify(invalidPaths) + " for changeRequest " + JSON.stringify(changeRequest));
+            } 
             for (var j = 0; j < invalidPaths.length; ++ j) {
                 if (applier.destroyed) { // 2nd guarding point for FLUID-5592
                     return;
@@ -20628,6 +20631,10 @@ var fluid = fluid || fluid_2_0;
     });
 
     fluid.transforms.indexOf = function (value, transformSpec) {
+        if (fluid.guardIt) {
+            fluid.nowImminent = true;
+            debugger;
+        }
         var offset = fluid.transforms.parseIndexationOffset(transformSpec.offset, "indexOf");
         var array = fluid.makeArray(transformSpec.array);
         var originalIndex = array.indexOf(value);

@@ -69,6 +69,14 @@ https://github.com/gpii/universal/LICENSE.txt
             }
         }
     });
+    
+    fluid.setLogging(true);
+    
+    gpii.tests.debugLang = function (langPanel) {
+        fluid.guardIt = true;
+        console.log("DEBUG LANG");
+        debugger;
+    };
 
     fluid.defaults("gpii.tests.langTester", {
         gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
@@ -119,6 +127,9 @@ https://github.com/gpii/universal/LICENSE.txt
                     priority: "last",
                     event: "{lang}.events.afterRender"
                 }, {
+                    func: "gpii.tests.debugLang",
+                    args: "{lang}"
+                }, {
                     func: "{lang}.applier.change",
                     args: ["lang", "en"]
                 }, {
@@ -126,6 +137,9 @@ https://github.com/gpii/universal/LICENSE.txt
                     args: ["{lang}", "en"],
                     spec: {path: "lang", priority: "last"},
                     changeEvent: "{lang}.applier.modelChanged"
+                }, {
+                    func: "gpii.tests.debugLang",
+                    args: "{lang}"
                 }, {
                     func: "{lang}.refreshView"
                 }, {
